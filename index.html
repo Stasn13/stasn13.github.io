@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        perspective: 500px;
+        perspective-origin: center center;
+    }
+@keyframes spincube{
+    from, to {
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    }
+    25%{transform: rotateY(-90deg)}
+    50%{transform: rotateY(-180deg)}
+    75%{transform: rotateY(-270deg)}
+    99%{transform: rotateY(0deg)}
+}
+.container{
+    animation-name: spincube;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-duration: 12s;
+    transform-style: preserve-3d;
+    transform-origin: 60px 60px 0;
+}
+.container div{
+    position: absolute;
+	width: 120px;
+	height: 120px;
+	border: 1px solid #8ECBDE;
+	background: rgba(255,255,255,0.6);
+	/*box-shadow: inset 0 0 20px yellow;*/
+	line-height: 120px;
+	text-align: center;
+	font-size: 100px;
+	/*color:yellowgreen;*/
+}
+.container .side1{
+    transform: translateZ(-60px);
+    background-image: url("img-cube/1@2x.png");
+    background-size: cover
+}
+.container .side2{
+    transform: translateZ(60px);
+    background-image: url("img-cube/2@2x.png");
+    background-size: cover
+}
+.container .side3{
+    transform: translateX(-60px) rotateY(-90deg);
+    background-image: url("img-cube/3@2x.png");
+    background-size: cover
+}
+.container .side4{
+    transform: translateX(60px) rotateY(90deg);
+    background-image: url("img-cube/4@2x.png");
+    background-size: cover
+}
+</style>
+<body>
+<div class="stage" id="stage" style="width: 120px; height: 120px;margin:100px auto;">
+    <div class="container">
+        <div class="side1"></div>
+        <div class="side2"></div>
+        <div class="side3"></div>
+        <div class="side4"></div>
+    </div>
+</div>
+<script>
+    var touchstartX = 0;
+    var touchstartY = 0;
+    var touchendX = 0;
+    var touchendY = 0;
+
+    var gesuredZone = document.getElementById('stage');
+
+    gesuredZone.addEventListener('touchstart', function (event) {
+        touchstartX = event.screenX;
+        touchstartY = event.screenY;
+    }, false);
+
+    gesuredZone.addEventListener('touchend', function (event) {
+        touchendX = event.screenX;
+        touchendY = event.screenY;
+        handleGesure();
+    }, false);
+
+    function handleGesure() {
+        var swiped = 'swiped: ';
+        if (touchendX < touchstartX) {
+            alert(swiped + 'left!');
+        }
+        if (touchendX > touchstartX) {
+            alert(swiped + 'right!');
+        }
+        if (touchendY < touchstartY) {
+            alert(swiped + 'down!');
+        }
+        if (touchendY > touchstartY) {
+            alert(swiped + 'left!');
+        }
+        if (touchendY == touchstartY) {
+            alert('tap!');
+        }
+    }
+</script>
+</body>
+</html>
